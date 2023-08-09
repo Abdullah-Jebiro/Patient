@@ -33,7 +33,9 @@ export class PatientFormComponent implements OnInit, OnDestroy {
         this.isEditing = true;
         this.subs.sink = this.patientService.getPatientById(patientId).subscribe({
           next: (result) => {
-            this.patientForm.patchValue(result);                      
+            this.patientForm.patchValue(result);  
+            console.log(this.patientForm.value);
+                                
           },
           error: (error) => {
             console.error('Error fetching patient:', error);

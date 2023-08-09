@@ -103,6 +103,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
   closeModal() {
     this.router.navigate([]);
     this.isModalOpen = false;
+    this.loadPatients();
   }
 
   ngOnDestroy(): void {

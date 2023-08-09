@@ -53,6 +53,8 @@ form {
     background-color: #ccc;
     cursor: not-allowed;
   }
-
+  input~div{
+    color: red;
+  }
   
   

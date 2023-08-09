@@ -2,53 +2,44 @@
   <div class="form-column">
     <label for="name">Name:</label>
     <input type="text" id="name" formControlName="name" required />
-    <div
-      *ngIf="
-        patientForm.get('name')?.hasError('required') &&
+    <div *ngIf="
+        patientForm.get('name')!.invalid &&
         patientForm.get('name')?.touched
-      "
-    >
+      ">
       Name is required
     </div>
 
     <label for="fileNo">File Number:</label>
     <input type="number" id="fileNo" formControlName="fileNo" required />
-    <div
-      *ngIf="
-        patientForm.get('fileNo')?.hasError('required') &&
+    <div *ngIf="
+        patientForm.get('fileNo')!.invalid &&
         patientForm.get('fileNo')?.touched
-      "
-    >
+      ">
       File number is required
     </div>
-    <div
-      *ngIf="
-        patientForm.get('fileNo')?.hasError('min') &&
-        patientForm.get('fileNo')?.touched
-      "
-    >
+    <div *ngIf="
+        patientForm.get('fileNo')!.invalid &&
+        patientForm.get('fileNo')?.touched &&
+        patientForm.get('fileNo')?.value <= 0
+      ">
       File number must be greater than 0
     </div>
 
     <label for="citizenId">Citizen ID:</label>
     <input type="text" id="citizenId" formControlName="citizenId" />
-    <div
-      *ngIf="
-        patientForm.get('citizenId')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('citizenId')!.invalid &&
         patientForm.get('citizenId')?.touched
-      "
-    >
-      Citizen ID is too long
+      ">
+      Invalid Citizen ID
     </div>
 
     <label for="birthDate">Birth Date:</label>
     <input type="date" id="birthDate" formControlName="birthDate" required />
-    <div
-      *ngIf="
-        patientForm.get('birthDate')?.hasError('required') &&
+    <div *ngIf="
+        patientForm.get('birthDate')!.invalid &&
         patientForm.get('birthDate')?.touched
-      "
-    >
+      ">
       Birth Date is required
     </div>
 
@@ -57,157 +48,121 @@
       <option value="0">Male</option>
       <option value="1">Female</option>
     </select>
-    <div
-      *ngIf="
-        patientForm.get('gender')?.hasError('required') &&
+    <div *ngIf="
+        patientForm.get('gender')!.invalid &&
         patientForm.get('gender')?.touched
-      "
-    >
+      ">
       Gender is required
     </div>
 
     <label for="nationality">Nationality:</label>
     <input type="text" id="nationality" formControlName="nationality" />
-    <div
-      *ngIf="
-        patientForm.get('nationality')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('nationality')!.invalid &&
         patientForm.get('nationality')?.touched
-      "
-    >
-      Nationality is too long
+      ">
+      Invalid Nationality
     </div>
+
     <label for="phoneNumber">Phone Number:</label>
     <input type="text" id="phoneNumber" formControlName="phoneNumber" />
-    <div
-      *ngIf="
-        patientForm.get('phoneNumber')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('phoneNumber')!.invalid &&
         patientForm.get('phoneNumber')?.touched
-      "
-    >
-      Phone Number is too long
-    </div>
-    <div
-      *ngIf="
-        patientForm.get('phoneNumber')?.hasError('pattern') &&
-        patientForm.get('phoneNumber')?.touched
-      "
-    >
+      ">
       Invalid Phone Number
     </div>
 
     <label for="email">Email:</label>
     <input type="email" id="email" formControlName="email" />
-    <div
-      *ngIf="
-        patientForm.get('email')?.hasError('email') &&
+    <div *ngIf="
+        patientForm.get('email')!.invalid &&
         patientForm.get('email')?.touched
-      "
-    >
+      ">
       Invalid email format
     </div>
+
     <label for="country">Country:</label>
     <input type="text" id="country" formControlName="country" />
-    <div
-      *ngIf="
-        patientForm.get('country')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('country')!.invalid &&
         patientForm.get('country')?.touched
-      "
-    >
-      Country is too long
+      ">
+      Invalid Country
     </div>
   </div>
+
   <div class="form-column">
     <label for="city">City:</label>
     <input type="text" id="city" formControlName="city" />
-    <div
-      *ngIf="
-        patientForm.get('city')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('city')!.invalid &&
         patientForm.get('city')?.touched
-      "
-    >
-      City is too long
+      ">
+      Invalid City
     </div>
 
     <label for="street">Street:</label>
     <input type="text" id="street" formControlName="street" />
-    <div
-      *ngIf="
-        patientForm.get('street')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('street')!.invalid &&
         patientForm.get('street')?.touched
-      "
-    >
-      Street is too long
+      ">
+      Invalid Street
     </div>
 
     <label for="address1">Address 1:</label>
     <input type="text" id="address1" formControlName="address1" />
-    <div
-      *ngIf="
-        patientForm.get('address1')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('address1')!.invalid &&
         patientForm.get('address1')?.touched
-      "
-    >
-      Address 1 is too long
+      ">
+      Invalid Address 1
     </div>
 
     <label for="address2">Address 2:</label>
     <input type="text" id="address2" formControlName="address2" />
-    <div
-      *ngIf="
-        patientForm.get('address2')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('address2')!.invalid &&
         patientForm.get('address2')?.touched
-      "
-    >
-      Address 2 is too long
+      ">
+      Invalid Address 2
     </div>
 
     <label for="contactPerson">Contact Person:</label>
     <input type="text" id="contactPerson" formControlName="contactPerson" />
-    <div
-      *ngIf="
-        patientForm.get('contactPerson')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('contactPerson')!.invalid &&
         patientForm.get('contactPerson')?.touched
-      "
-    >
-      Contact Person is too long
+      ">
+      Invalid Contact Person
     </div>
 
     <label for="contactRelation">Contact Relation:</label>
     <input type="text" id="contactRelation" formControlName="contactRelation" />
-    <div
-      *ngIf="
-        patientForm.get('contactRelation')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('contactRelation')!.invalid &&
         patientForm.get('contactRelation')?.touched
-      "
-    >
-      Contact Relation is too long
+      ">
+      Invalid Contact Relation
     </div>
 
     <label for="contactPhone">Contact Phone:</label>
     <input type="text" id="contactPhone" formControlName="contactPhone" />
-    <div
-      *ngIf="
-        patientForm.get('contactPhone')?.hasError('maxlength') &&
+    <div *ngIf="
+        patientForm.get('contactPhone')!.invalid &&
         patientForm.get('contactPhone')?.touched
-      "
-    >
-      Contact Phone is too long
+      ">
+      Invalid Contact Phone
     </div>
 
     <label for="firstVisitDate">First Visit Date:</label>
-    <input
-      type="date"
-      id="firstVisitDate"
-      formControlName="firstVisitDate"
-      required
-    />
-    <div
-      *ngIf="
-        patientForm.get('firstVisitDate')?.hasError('required') &&
+    <input type="date" id="firstVisitDate" formControlName="firstVisitDate" required />
+    <div *ngIf="
+        patientForm.get('firstVisitDate')!.invalid &&
         patientForm.get('firstVisitDate')?.touched
-      "
-    >
-      First Visit Date is required
+      ">
+      Invalid First Visit Date
     </div>
 
     <button type="submit" [disabled]="patientForm.invalid">Save</button>

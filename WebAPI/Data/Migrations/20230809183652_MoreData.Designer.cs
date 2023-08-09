@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230809183652_MoreData")]
+    partial class MoreData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +34,7 @@ namespace Data.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("Address2")
+                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
@@ -111,7 +114,7 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("510d7d93-5bd6-41ff-9c57-7abffa1c924a"),
+                            Id = new Guid("bf6049b2-8332-4b86-b100-97a78c54e42a"),
                             Address1 = "Apartment 4A",
                             Address2 = "Building XYZ",
                             BirthDate = new DateTime(1985, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -128,12 +131,12 @@ namespace Data.Migrations
                             Name = "John Doe",
                             Nationality = "USA",
                             PhoneNumber = "123-456-7890",
-                            RecordCreationDate = new DateTime(2023, 8, 9, 22, 16, 31, 366, DateTimeKind.Local).AddTicks(9696),
+                            RecordCreationDate = new DateTime(2023, 8, 9, 21, 36, 51, 802, DateTimeKind.Local).AddTicks(3671),
                             Street = "123 Main Street"
                         },
                         new
                         {
-                            Id = new Guid("f6798e76-ca73-4f07-acf4-0ea08f4ace2a"),
+                            Id = new Guid("0e8a99e3-4b1a-4376-b252-0efdd125ded7"),
                             Address1 = "Suite 8B",
                             Address2 = "Tower ABC",
                             BirthDate = new DateTime(1990, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -150,12 +153,12 @@ namespace Data.Migrations
                             Name = "Jane Smith",
                             Nationality = "Canada",
                             PhoneNumber = "555-123-4567",
-                            RecordCreationDate = new DateTime(2023, 8, 9, 22, 16, 31, 369, DateTimeKind.Local).AddTicks(513),
+                            RecordCreationDate = new DateTime(2023, 8, 9, 21, 36, 51, 804, DateTimeKind.Local).AddTicks(3834),
                             Street = "456 Elm Street"
                         },
                         new
                         {
-                            Id = new Guid("10bde430-4346-4c40-a537-e0e039cf0a12"),
+                            Id = new Guid("509d5cdf-8fd6-44e5-bb45-392129abf62b"),
                             Address1 = "Flat 3C",
                             Address2 = "Manor Gardens",
                             BirthDate = new DateTime(1998, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -172,12 +175,12 @@ namespace Data.Migrations
                             Name = "Emily Johnson",
                             Nationality = "United Kingdom",
                             PhoneNumber = "222-555-8888",
-                            RecordCreationDate = new DateTime(2023, 8, 9, 22, 16, 31, 369, DateTimeKind.Local).AddTicks(550),
+                            RecordCreationDate = new DateTime(2023, 8, 9, 21, 36, 51, 804, DateTimeKind.Local).AddTicks(3929),
                             Street = "789 Park Lane"
                         },
                         new
                         {
-                            Id = new Guid("1780a0b5-6b5e-46cf-9835-aede258c7880"),
+                            Id = new Guid("88bfd53c-531d-4893-8e31-208ad6dadbd3"),
                             Address1 = "Unit 12",
                             Address2 = "Coastal Towers",
                             BirthDate = new DateTime(1973, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -194,7 +197,7 @@ namespace Data.Migrations
                             Name = "Michael Anderson",
                             Nationality = "Australia",
                             PhoneNumber = "777-222-3333",
-                            RecordCreationDate = new DateTime(2023, 8, 9, 22, 16, 31, 369, DateTimeKind.Local).AddTicks(558),
+                            RecordCreationDate = new DateTime(2023, 8, 9, 21, 36, 51, 804, DateTimeKind.Local).AddTicks(3946),
                             Street = "321 Beach Road"
                         });
                 });

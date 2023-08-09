@@ -65,7 +65,7 @@ namespace Services
                 .Take(pageSize)
                 .ToListAsync();
 
-            var totalCourses = await _context.Patients.CountAsync();
+            var totalCourses = await patientsQuery.CountAsync();
             var paginationMetaData = new PaginationMetaData(totalCourses, pageSize, pageNumber);
             return (result, paginationMetaData);
         }
