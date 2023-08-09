@@ -1,0 +1,17 @@
+th,
+td {
+  text-align: center;
+  padding: 10px 8px;
+  white-space: nowrap;
+}
+input[name="filter"] {
+  margin: 5px;
+}
+.fa-x {
+  color: #dc3545;
+  opacity: 0.8;
+}
+.fa-x:hover {
+  cursor: pointer;
+  opacity: 1;
+}

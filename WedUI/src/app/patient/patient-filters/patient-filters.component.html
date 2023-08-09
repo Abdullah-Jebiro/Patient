@@ -1,0 +1,49 @@
+<div class="patient-search-container">
+  <h2>Search Patients</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="searchPatients()">
+    <div class="form-flex">
+      <div class="input-group">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          formControlName="name"
+          [ngClass]="{
+            'is-invalid':
+              searchForm.get('name')!.invalid && searchForm.get('name')!.touched
+          }"
+        />
+      </div>
+      <div class="input-group">
+        <label for="fileNo">File No:</label>
+        <input
+          type="number"
+          id="fileNo"
+          name="fileNo"
+          formControlName="fileNo"
+          [ngClass]="{
+            'is-invalid':
+              searchForm.get('fileNo')!.invalid &&
+              searchForm.get('fileNo')!.touched
+          }"
+        />
+      </div>
+      <div class="input-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          name="phoneNumber"
+          formControlName="phoneNumber"
+          [ngClass]="{
+            'is-invalid':
+              searchForm.get('phoneNumber')!.invalid &&
+              searchForm.get('phoneNumber')!.touched
+          }"
+        />
+      </div>
+    </div>
+    <button [disabled]="searchForm.invalid" type="submit">Search</button>
+  </form>
+</div>

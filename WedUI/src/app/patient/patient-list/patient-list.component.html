@@ -1,0 +1,83 @@
+<div class="container-fluid p-3">
+  <div class="card">
+    
+    <app-patient-filters
+      (searchFilters)="searchPatients($event)"
+    ></app-patient-filters>
+
+    <div class="card-bady">
+      <div class="card-bady">
+        <div class="table-responsive background-table">
+          <table class="table table-light table-hover">
+            <thead>
+              <th>Name</th>
+              <th>File Number</th>
+              <th>Citizen ID</th>
+              <th>BirthDate</th>
+              <th>Gender</th>
+              <th>Nationality</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Street</th>
+              <th>Address</th>
+              <th>Contact Person</th>
+              <th>Contact Relation</th>
+              <th>Contact Phone</th>
+              <th>First Visit Date</th>
+              <th>Record Creation Date</th>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let patient of patients
+                    | paginate
+                      : {
+                          itemsPerPage: PageSize,
+                          currentPage: currentPage,
+                          totalItems: totalItems,
+                          id: 'patients'
+                        }
+                "
+              >
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.fileNo }}</td>
+                <td>{{ patient.citizenId }}</td>
+                <td>{{ patient.birthDate | date }}</td>
+                <td>{{ patient.gender === 0 ? "Male" : "Female" }}</td>
+                <td>{{ patient.nationality }}</td>
+                <td>{{ patient.phoneNumber }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.country }}</td>
+                <td>{{ patient.city }}</td>
+                <td>{{ patient.street }}</td>
+                <td>
+                  <span>{{ patient.address1 }} </span>
+                  <span>{{ patient.address2 }}</span>
+                </td>
+                <td>{{ patient.contactPerson }}</td>
+                <td>{{ patient.contactRelation }}</td>
+                <td>{{ patient.contactPhone }}</td>
+                <td>{{ patient.firstVisitDate | date }}</td>
+                <td>{{ patient.recordCreationDate | date }}</td>
+                <td>
+                  <i
+                    class="fa-solid fa-x"
+                    (click)="deletePatient(patient.id)"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls
+            (pageChange)="pageChanged($event)"
+            id="patients"
+            [routerLink]="'/patient'"
+            [queryParams]="{ currentPage: currentPage }"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
