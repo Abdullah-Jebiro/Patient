@@ -1,6 +1,6 @@
 /* Add general styling to the form */
 form {
-    width: 600px;
+    width: auto;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -53,4 +53,6 @@ form {
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  
   

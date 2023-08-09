@@ -1,9 +1,34 @@
 <div class="container-fluid p-3">
+  <!-- Modal for Patient Form -->
+  <div class="modal" role="dialog" *ngIf="isModalOpen">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Patient Form</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="closeModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-patient-form
+            (closeModal)="closeModal()"
+          ></app-patient-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
-    
     <app-patient-filters
       (searchFilters)="searchPatients($event)"
     ></app-patient-filters>
+
+    <button class="openModal" [routerLink]="['/patient']" [queryParams]="{ add: 'true' }">Add</button>
+
 
     <div class="card-bady">
       <div class="card-bady">
@@ -67,9 +92,19 @@
                     (click)="deletePatient(patient.id)"
                   ></i>
                 </td>
+                <td>
+                  <i
+                    class="fa-solid fa-pen"
+                    [routerLink]="['.']"
+                    [queryParams]="{ edit: patient.id }"
+                    queryParamsHandling="merge"
+                  >
+                  </i>
+                </td>
               </tr>
             </tbody>
           </table>
+
           <pagination-controls
             (pageChange)="pageChanged($event)"
             id="patients"

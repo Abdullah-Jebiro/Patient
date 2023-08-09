@@ -16,6 +16,8 @@ export class PatientFiltersComponent {
       name: ['', Validators.maxLength(100)],
       fileNo: [null, Validators.min(0)],
       phoneNumber: ['', Validators.pattern(/^[^a-zA-Z]*$/)] 
+
+    
     });
   }
   searchPatients() {

@@ -21,8 +21,6 @@ import { PatientFormComponent } from './patient-form/patient-form.component';
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', component: PatientListComponent },
-      { path: 'add', component: PatientFormComponent },
-      { path: 'edit/:id', component: PatientFormComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ])
   ]
