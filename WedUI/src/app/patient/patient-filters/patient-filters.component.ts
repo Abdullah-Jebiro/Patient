@@ -15,9 +15,7 @@ export class PatientFiltersComponent {
     this.searchForm = this.fb.group({
       name: ['', Validators.maxLength(100)],
       fileNo: [null, Validators.min(0)],
-      phoneNumber: ['', Validators.pattern(/^[^a-zA-Z]*$/)] 
-
-    
+      phoneNumber: ['', Validators.pattern(/^[^a-zA-Z]*$/)]    
     });
   }
   searchPatients() {

@@ -15,7 +15,7 @@ namespace Model.Dtos
         public int FileNo { get; set; }
 
         [StringLength(20)]
-        public string CitizenId { get; set; }
+        public string CitizenId { get; set; } = null!;
 
         [Required(ErrorMessage = "Birthdate is required")]
         public DateTime BirthDate { get; set; }
@@ -46,7 +46,7 @@ namespace Model.Dtos
         public string Address1 { get; set; } = null!;
 
         [StringLength(100)]
-        public string Address2 { get; set; } = string.Empty;
+        public string? Address2 { get; set; }
 
         [StringLength(100)]
         public string ContactPerson { get; set; } = null!;

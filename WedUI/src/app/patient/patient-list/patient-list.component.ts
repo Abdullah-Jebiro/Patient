@@ -13,97 +13,138 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PatientListComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
-  totalPages!: number;
-  currentPage: number = 1;
-  PageSize: number = 2;
-  totalItems!: number;
   patients: IPatient[] = [];
-  isModalOpen = false;
   searchForm!: FormGroup;
+  currentPage = 1;
+  PageSize = 3;
+  totalItems = 0;
+  isModalOpen = false;
 
   constructor(
     private patientService: PatientService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder 
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+    this.checkQueryParams();
     this.loadPatients();
+  }
+
+  /**
+   * Initializes the search form.
+   */
+  initializeForm(): void {
     this.searchForm = this.formBuilder.group({
-      name: [''], 
+      name: [''],
       fileNo: [''],
       phoneNumber: [''],
     });
-    this.route.queryParamMap.subscribe((queryParams) => {
-      const editId = queryParams.has('edit');
-      if (editId) {      
-        this.openModal();
-      }
-      const shouldOpenModal = queryParams.has('add') && queryParams.get('add') === 'true';
+  }
 
+  /**
+   * Checks query parameters for modal display.
+   */
+  checkQueryParams(): void {
+    this.route.queryParamMap.subscribe((queryParams) => {
+      const shouldOpenModal =
+        queryParams.has('edit') || queryParams.get('add') === 'true';
       if (shouldOpenModal) {
         this.openModal();
       }
     });
-
   }
 
+  /** 
+   * @param page The new page number.
+   */
   pageChanged(page: number): void {
     this.currentPage = page;
     this.loadPatients();
   }
 
+  /**
+   * Searches for patients based on filters.
+   * @param filters The search filters.
+   */
   searchPatients(filters: IPatientSearchFilters) {
     this.currentPage = 1;
     this.searchForm.patchValue(filters);
     this.loadPatients();
   }
 
+  /**
+   * Deletes a patient.
+   * @param patientId The ID of the patient to delete.
+   */
   deletePatient(patientId: string) {
-    console.log(patientId);
     this.subs.sink = this.patientService.deletePatient(patientId).subscribe({
       next: () => {
-        const index = this.patients.findIndex(
-          (patient) => patient.id == patientId
-        );
-        this.patients.splice(index, 1);
+        this.removeDeletedPatient(patientId);
+        //this.loadPatients(); If you want to update the items total
+      },
+      error: (error) => {
+        console.error(error);
       },
     });
   }
 
-
-
-  private loadPatients(): void {
-    const name = this.searchForm?.get('name')?.value;
-    const fileNo = this.searchForm?.get('fileNo')?.value;
-    const phoneNumber = this.searchForm?.get('phoneNumber')?.value;
-
+  /**
+   * Loads patients based on current filters and pagination.
+   */
+  loadPatients(): void {
+    const filters: IPatientSearchFilters = this.searchForm.value;
     this.subs.sink = this.patientService
-      .getPatients(this.currentPage, this.PageSize, name, fileNo, phoneNumber)
+      .getPatients(
+        this.currentPage,
+        this.PageSize,
+        filters.name,
+        filters.fileNo,
+        filters.phoneNumber
+      )
       .subscribe({
         next: (result) => {
-        
-          this.patients = result.body!;
+          this.patients = result.body ?? [];
           const paginationData = JSON.parse(
             result.headers.get('x-pagination')!
           );
           this.totalItems = paginationData.TotalItemCount;
           this.currentPage = paginationData.CurrentPage;
         },
-        error:()=>{
-          this.patients=[];
-        }
+        error: (error) => {
+          console.error(error);
+          this.patients = [];
+        },
       });
   }
 
-  openModal() {
+  /**
+   * Opens the patient modal.
+   */
+  openModal(): void {
     this.isModalOpen = true;
   }
-  closeModal() {
+
+  /**
+   * Closes the patient modal and reloads patients.
+   */
+  closeModal(): void {
     this.router.navigate([]);
     this.isModalOpen = false;
     this.loadPatients();
+  }
+
+  /**
+   * Removes a deleted patient from the list.
+   * @param patientId The ID of the deleted patient.
+   */
+  removeDeletedPatient(patientId: string): void {
+    const index = this.patients.findIndex((patient) => patient.id == patientId);
+    if (index !== -1) {
+      this.patients.splice(index, 1);
+    }
   }
 
   ngOnDestroy(): void {

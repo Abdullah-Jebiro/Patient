@@ -60,12 +60,14 @@ namespace Services
             }
 
             var result = await patientsQuery
-                .OrderBy(c => c.RecordCreationDate)
+                .OrderByDescending(c => c.RecordCreationDate)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
+            // Calculate the total count of patients after applying filters for pagination
             var totalCourses = await patientsQuery.CountAsync();
+
             var paginationMetaData = new PaginationMetaData(totalCourses, pageSize, pageNumber);
             return (result, paginationMetaData);
         }

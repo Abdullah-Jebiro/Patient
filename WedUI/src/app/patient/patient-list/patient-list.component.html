@@ -80,9 +80,9 @@
               <td>{{ patient.country }}</td>
               <td>{{ patient.city }}</td>
               <td>{{ patient.street }}</td>
-              <td>
-                <span>{{ patient.address1 }} </span>
-                <span>{{ patient.address2 }}</span>
+              <td>              
+                <div> <span *ngIf="patient.address2?.length">first:</span>{{patient.address1}}</div>
+                <div *ngIf="patient.address2?.length">second :{{ patient.address2 }}</div>
               </td>
               <td>{{ patient.contactPerson }}</td>
               <td>{{ patient.contactRelation }}</td>

@@ -44,7 +44,7 @@ namespace Model.Dtos
         public string Address1 { get; set; } = null!;
 
         [StringLength(100)]
-        public string Address2 { get; set; } = string.Empty;
+        public string? Address2 { get; set; }
 
         [StringLength(100)]
         public string ContactPerson { get; set; } = null!;

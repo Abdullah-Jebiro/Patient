@@ -39,8 +39,24 @@ export class PatientService {
       .pipe(catchError(this.handleError))
   }
 
-  getPatients(pageNumber: number, pageSize: number, name?: string, fileNo?: number, phoneNumber?: string)
-    : Observable<HttpResponse<IPatient[]>> {
+
+
+  /**
+ * Retrieves a list of patients with optional filters and pagination.
+ * @param pageNumber The page number.
+ * @param pageSize The page size.
+ * @param name The patient's name (optional).
+ * @param fileNo The patient's file number (optional).
+ * @param phoneNumber The patient's phone number (optional).
+ * @returns An Observable with the list of patients and pagination data.
+ */
+  getPatients(
+    pageNumber: number,
+    pageSize: number,
+    name?: string,
+    fileNo?: number,
+    phoneNumber?: string
+  ): Observable<HttpResponse<IPatient[]>> {
     let url = `${this.apiUrl}Patients?pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
     if (name) {
@@ -58,9 +74,6 @@ export class PatientService {
     };
 
     return this.http.get<IPatient[]>(url, { observe: 'response', ...httpOptions }).pipe(
-      tap(response => {
-        console.log('paginationData : ' + response.headers.get('x-pagination'));
-      }),
       catchError(this.handleError)
     );
   }
