@@ -113,6 +113,7 @@
           id="patients"
           [routerLink]="'/patient'"
           [queryParams]="{ currentPage: currentPage }"
+          queryParamsHandling="merge"
         ></pagination-controls>
       </div>
     </div>

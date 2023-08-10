@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PatientService } from 'src/app/services/patient.service';
 import { SubSink } from 'subsink';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { IPatientSearchFilters } from '../Models/IPatientSearchFilters';
 import { IPatient } from '../Models/IPatient';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,7 +23,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
     private patientService: PatientService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +47,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
       const name = queryParams.get('name') || undefined;
       const fileNo = queryParams.get('fileNo') || undefined;
       const phoneNumber = queryParams.get('phoneNumber') || undefined;
+      this.currentPage = Number(queryParams.get('currentPage')) || 1;
 
       this.patientSearchFilters = {
         name: name,
