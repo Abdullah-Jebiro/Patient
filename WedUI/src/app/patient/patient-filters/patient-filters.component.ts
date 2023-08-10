@@ -26,11 +26,10 @@ export class PatientFiltersComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.searchForm = this.fb.group({
-      name: [this.route.snapshot.queryParamMap.get('name') || null],
-      fileNo: [this.route.snapshot.queryParamMap.get('fileNo') || null],
+      name: [this.route.snapshot.queryParamMap.get('name') || undefined, [Validators.min(1)]],
+      fileNo: [this.route.snapshot.queryParamMap.get('fileNo') || undefined],
       phoneNumber: [
-        this.route.snapshot.queryParamMap.get('phoneNumber') || null,
-      ],
+        this.route.snapshot.queryParamMap.get('phoneNumber') || undefined, [Validators.maxLength(15), Validators.pattern(/^[^a-zA-Z]*$/)]]
     });
   }
 
