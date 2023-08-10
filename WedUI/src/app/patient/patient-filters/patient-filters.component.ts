@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IPatientSearchFilters } from '../Models/IPatientSearchFilters';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +15,8 @@ import { SubSink } from 'subsink';
   templateUrl: './patient-filters.component.html',
   styleUrls: ['./patient-filters.component.css'],
 })
-export class PatientFiltersComponent {
+export class PatientFiltersComponent implements OnInit, OnDestroy {
+  private subs = new SubSink();
   @Output() searchFilters = new EventEmitter<IPatientSearchFilters>();
   searchForm: FormGroup;
 
@@ -21,10 +28,20 @@ export class PatientFiltersComponent {
     this.searchForm = this.fb.group({
       name: [this.route.snapshot.queryParamMap.get('name') || null],
       fileNo: [this.route.snapshot.queryParamMap.get('fileNo') || null],
-      phoneNumber: [this.route.snapshot.queryParamMap.get('phoneNumber') || null]
+      phoneNumber: [
+        this.route.snapshot.queryParamMap.get('phoneNumber') || null,
+      ],
     });
-    
-    
+  }
+
+  ngOnInit(): void {
+    this.subs.sink = this.searchForm.valueChanges.subscribe(() =>
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: this.searchForm.value,
+        queryParamsHandling: 'merge',
+      })
+    );
   }
 
   searchPatients() {
@@ -39,5 +56,8 @@ export class PatientFiltersComponent {
         queryParamsHandling: 'merge',
       });
     }
+  }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

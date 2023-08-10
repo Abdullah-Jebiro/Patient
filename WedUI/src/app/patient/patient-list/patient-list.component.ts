@@ -48,14 +48,14 @@ export class PatientListComponent implements OnInit, OnDestroy {
    * Checks query parameters for modal display.
    */
   checkQueryParams(): void {
-    this.subs.sink =this.route.queryParamMap.subscribe((queryParams) => {
+    this.subs.sink = this.route.queryParamMap.subscribe((queryParams) => {
       const shouldOpenModal =
         queryParams.has('edit') || queryParams.get('add') === 'true';
       if (shouldOpenModal) {
         this.openModal();
       }
 
-      // Read and set query parameters to the form
+      // Read and set query parameters on the search form
       const name = queryParams.get('name') || null;
       const fileNo = queryParams.get('fileNo') || null;
       const phoneNumber = queryParams.get('phoneNumber') || null;
