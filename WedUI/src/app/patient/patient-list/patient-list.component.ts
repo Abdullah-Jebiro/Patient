@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PatientListComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   patients: IPatient[] = [];
-  searchForm!: FormGroup;
+  patientSearchFilters!: IPatientSearchFilters;
   currentPage = 1;
   PageSize = 3;
   totalItems = 0;
@@ -28,21 +28,11 @@ export class PatientListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initializeForm();
     this.checkQueryParams();
     this.loadPatients();
   }
 
-  /**
-   * Initializes the search form.
-   */
-  initializeForm(): void {
-    this.searchForm = this.formBuilder.group({
-      name: [''],
-      fileNo: [''],
-      phoneNumber: [''],
-    });
-  }
+
 
   /**
    * Checks query parameters for modal display.
@@ -56,15 +46,16 @@ export class PatientListComponent implements OnInit, OnDestroy {
       }
 
       // Read and set query parameters on the search form
-      const name = queryParams.get('name') || null;
-      const fileNo = queryParams.get('fileNo') || null;
-      const phoneNumber = queryParams.get('phoneNumber') || null;
+      const name = queryParams.get('name') || undefined;
+      const fileNo = queryParams.get('fileNo') || undefined;
+      const phoneNumber = queryParams.get('phoneNumber') || undefined;
 
-      this.searchForm.patchValue({
+      this.patientSearchFilters = {
         name: name,
-        fileNo: fileNo,
+        fileNo: Number(fileNo),
         phoneNumber: phoneNumber
-      });
+      };
+
     });
   }
 
@@ -83,7 +74,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
    */
   searchPatients(filters: IPatientSearchFilters) {
     this.currentPage = 1;
-    this.searchForm.patchValue(filters);
+    this.patientSearchFilters = filters;
     this.loadPatients();
   }
 
@@ -107,14 +98,13 @@ export class PatientListComponent implements OnInit, OnDestroy {
    * Loads patients based on current filters and pagination.
    */
   loadPatients(): void {
-    const filters: IPatientSearchFilters = this.searchForm.value;
     this.subs.sink = this.patientService
       .getPatients(
         this.currentPage,
         this.PageSize,
-        filters.name,
-        filters.fileNo,
-        filters.phoneNumber
+        this.patientSearchFilters.name!,
+        this.patientSearchFilters.fileNo,
+        this.patientSearchFilters.phoneNumber
       )
       .subscribe({
         next: (result) => {

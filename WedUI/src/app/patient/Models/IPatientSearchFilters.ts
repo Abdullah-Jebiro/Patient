@@ -1,6 +1,6 @@
 
 export interface IPatientSearchFilters {
-    name: string;
-    fileNo: number;
-    phoneNumber: string;
-}
+    name?: string ;
+    fileNo?: number;
+    phoneNumber?: string;
+  }
