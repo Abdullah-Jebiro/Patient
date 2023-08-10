@@ -25,7 +25,6 @@
       class="openModal"
       [routerLink]="['/patient']"
       [queryParams]="{ add: 'true' }"
-      queryParamsHandling="merge"
     >
       Add paginate
     </button>
@@ -101,7 +100,6 @@
                   class="fa-solid fa-pen"
                   [routerLink]="['.']"
                   [queryParams]="{ edit: patient.id }"
-                  queryParamsHandling="merge"
                 >
                 </i>
               </td>
