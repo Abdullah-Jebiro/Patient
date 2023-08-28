@@ -1,7 +1,9 @@
 ﻿using Data;
 using Microsoft.EntityFrameworkCore;
 using Model.DbEntities;
+using Model.Dtos;
 using Model.Pagination;
+using System.Linq;
 
 namespace Services
 {
@@ -31,32 +33,28 @@ namespace Services
             }
         }
 
-        public async Task<(IEnumerable<Patient>, PaginationMetaData)> GetAllAsync(
-            int pageNumber,
+        public async Task<(IEnumerable<Patient>, PaginationMetaData)> GetAllAsync(int pageNumber,
             int pageSize,
-            string? name,
-            int? fileNo,
-            string? phoneNumber
-        )
+            PatientSearchFilters searchFilters)
         {
 
             var patientsQuery = _context.Patients as IQueryable<Patient>;
 
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(searchFilters.Name))
             {
-                var nameLower = name.ToLower();
+                var nameLower = searchFilters.Name.ToLower();
                 patientsQuery = patientsQuery.Where(c => c.Name.ToLower().Contains(nameLower));
             }
 
-            if (fileNo.HasValue)
+            if (searchFilters.FileNo.HasValue)
             {
-                patientsQuery = patientsQuery.Where(c => c.FileNo==fileNo);
+                patientsQuery = patientsQuery.Where(c => c.FileNo == searchFilters.FileNo);
             }
 
-            
-            if (!string.IsNullOrEmpty(phoneNumber))
+
+            if (!string.IsNullOrEmpty(searchFilters.PhoneNumber))
             {
-                patientsQuery = patientsQuery.Where(c => c.PhoneNumber.Contains(phoneNumber));
+                patientsQuery = patientsQuery.Where(c => c.PhoneNumber.Contains(searchFilters.PhoneNumber));
             }
 
             var result = await patientsQuery

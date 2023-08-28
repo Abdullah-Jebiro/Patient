@@ -101,9 +101,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
       .getPatients(
         this.currentPage,
         this.PageSize,
-        this.patientSearchFilters.name!,
-        this.patientSearchFilters.fileNo,
-        this.patientSearchFilters.phoneNumber
+        this.patientSearchFilters
       )
       .subscribe({
         next: (result) => {
@@ -132,10 +130,23 @@ export class PatientListComponent implements OnInit, OnDestroy {
    * Closes the patient modal and reloads patients.
    */
   closeModal(): void {
-    this.router.navigate([]);
+    const queryParams = this.route.snapshot.queryParams;
+
+    // Remove specific query parameters related to add and edit
+    const updatedQueryParams = { ...queryParams };
+    delete updatedQueryParams['add'];
+    delete updatedQueryParams['edit'];
+  
+    // Navigate to the same route with the updated query parameters
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: updatedQueryParams,
+    });
+    
+
     this.isModalOpen = false;
     this.loadPatients();
-  }
+}
 
   /**
    * Removes a deleted patient from the list.

@@ -5,6 +5,7 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { IPatient } from '../patient/Models/IPatient';
 import { IPatientForUpdateDto } from '../patient/Models/IPatientForUpdateDto';
 import { IPatientForAddDto } from '../patient/Models/IPatientForAddDto';
+import { IPatientSearchFilters } from '../patient/Models/IPatientSearchFilters';
 
 @Injectable({
   providedIn: 'root',
@@ -53,21 +54,20 @@ export class PatientService {
   getPatients(
     pageNumber: number,
     pageSize: number,
-    name?: string,
-    fileNo?: number,
-    phoneNumber?: string
+    searchFilters: IPatientSearchFilters
   ): Observable<HttpResponse<IPatient[]>> {
-    let url = `${this.apiUrl}Patients?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    let url = `${this.apiUrl}Patients?`;
 
-    if (name) {
-      url += `&name=${name}`;
+    if (searchFilters.name) {
+      url += `&name=${searchFilters.name}`;
     }
-    if (fileNo) {
-      url += `&fileNo=${fileNo}`;
+    if (searchFilters.fileNo) {
+      url += `&fileNo=${searchFilters.fileNo}`;
     }
-    if (phoneNumber) {
-      url += `&phoneNumber=${phoneNumber}`;
+    if (searchFilters.phoneNumber) {
+      url += `&phoneNumber=${searchFilters.phoneNumber}`;
     }
+    url += `&pageNumber=${pageNumber}&pageSize=${pageSize}`
 
     const httpOptions = {
       withCredentials: true
@@ -86,6 +86,8 @@ export class PatientService {
       errorMessage = ` client-side error` + error.error.message;
     } else {
       errorMessage = `Error Code: ${error.status} Message : ${error?.message}`;
+      console.table(error.error.errors);
+
     }
     console.log(errorMessage);
     return throwError(() => errorMessage);

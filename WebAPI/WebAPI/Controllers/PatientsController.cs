@@ -34,14 +34,9 @@ namespace WebAPI.Controllers
         /// <param name="pageSize">The number of items per page. Default is 10.</param>
         /// <returns>A paginated list of patients.</returns>
         [HttpGet]
-        public async Task<ActionResult> GetPatients(
-            string? name,
-            int? fileNo,
-            string? phoneNumber,
-            int pageNumber = 1,
-            int pageSize = 10)
+        public async Task<ActionResult> GetPatients([FromQuery]PatientSearchFilters patientSearchFilters,int pageNumber = 1,int pageSize = 10)
         {
-            var (patients, paginationData) = await _patientRepo.GetAllAsync(pageNumber, pageSize, name, fileNo, phoneNumber);
+            var (patients, paginationData) = await _patientRepo.GetAllAsync(pageNumber, pageSize, patientSearchFilters);
 
             if (!patients.Any())
             {

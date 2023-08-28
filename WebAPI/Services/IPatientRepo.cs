@@ -1,4 +1,5 @@
 ﻿using Model.DbEntities;
+using Model.Dtos;
 using Model.Pagination;
 using System.Linq.Expressions;
 
@@ -22,12 +23,7 @@ namespace Services
         /// <param name="fileNo">Optional: Filter by file number.</param>
         /// <param name="phoneNumber">Optional: Filter by phone number.</param>
         /// <returns>A paginated list of patients.</returns>
-        Task<(IEnumerable<Patient>, PaginationMetaData)> GetAllAsync(
-            int pageNumber,
-            int pageSize,
-            string? name,
-            int? fileNo,
-            string? phoneNumber);
+        Task<(IEnumerable<Patient>, PaginationMetaData)> GetAllAsync(int pageNumber,int pageSize,PatientSearchFilters patientSearchFilters);
 
         /// <summary>
         /// Adds a new patient to the repository.
